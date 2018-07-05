@@ -13,12 +13,18 @@ def nombre_de_journaliste(journalistes)
 end
 
 def parcourt_journaliste(journalistes)
+  #initialise le compteur de handles contenant au moins un chiffre
   @compteurElmtChiffre = 0
+  #initialise le compteur de handles commençant par une majuscule
   @premiere_majuscule = 0
+  #initialise le compteur de handles contenant au moins une majuscule
   @majuscule = 0
+  #initialise le compteur de handles contenant "aude"
   @aude = 0
+  #initialise le compteur de handles contenant au moins un underscore
   @underscore = 0
 
+    #Boucle qui appelle les fonctions
     journalistes.each do |journaliste|
     recherche_nombre(journaliste)
     recherche_aude(journaliste)
@@ -27,6 +33,7 @@ def parcourt_journaliste(journalistes)
     recherche_underscore(journaliste)
   end
 
+  #affichage du résultat
   puts "Il y a #{@compteurElmtChiffre} journalistes avec un nombre dans le handle."
   puts "Il y a #{@aude} journalistes nommés aude."
   puts "Il y a #{@premiere_majuscule} de handles qui commencent par une majuscule."
@@ -35,32 +42,43 @@ def parcourt_journaliste(journalistes)
 
 end
 
+#fonction qui cherche les handles contenant au moins un chiffre
 def recherche_nombre(journaliste)
-
+  #initialise le compteur à 0
   compteurChiffre = 0
-
+  #Transforme les caractères en ascii
   journaliste.each_byte do |c|
+    #vérifie si chaque caractère est un nombre avec la fonction numeric?
     if c.chr.numeric?
+      #ajoute 1 au compteur
       compteurChiffre += 1
     end
   end
-
+#si un élément du tableau contient plus de 1 chiffres le compteur augmente du nombre de chiffres
+#que contient cet élément, ex: @Xavier75 -> 7, 5 -> compteur + 2
+#donc si le compteur est plus grand que 0
   if compteurChiffre > 0
+    #le compteurElmtChiffre augmente de 1
     @compteurElmtChiffre += 1
   end
 
 end
 
+#fonction qui recherche le nombre de handles contenant "aude"
 def recherche_aude(journaliste)
+  #si l'élément du tableau en minuscule = "aude"
   if journaliste.downcase =~ /aude/
+    #alors aude + 1
     @aude += 1
   end
 
 end
 
+#fonction qui vérifie si la premiere lettre d'un handle est majuscule
 def recherche_premiere_majuscule(journaliste)
-
+#si la lettre après le @ est majuscule
   if journaliste =~ /@[A-Z]/
+    #alors premiere_majuscule + 1
     @premiere_majuscule += 1
   end
 
