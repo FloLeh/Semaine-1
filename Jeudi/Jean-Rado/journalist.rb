@@ -24,7 +24,7 @@ def parcourt_journaliste(journalistes)
   #initialise le compteur de handles contenant au moins un underscore
   @underscore = 0
 
-    #Boucle qui appelle les fonctions
+    #Boucle qui appelle les fonctions qui prennent journaliste en paramètres
     journalistes.each do |journaliste|
     recherche_nombre(journaliste)
     recherche_aude(journaliste)
@@ -33,12 +33,12 @@ def parcourt_journaliste(journalistes)
     recherche_underscore(journaliste)
   end
 
-  #affichage du résultat
+  #affichage des résultat
   puts "Il y a #{@compteurElmtChiffre} journalistes avec un nombre dans le handle."
   puts "Il y a #{@aude} journalistes nommés aude."
-  puts "Il y a #{@premiere_majuscule} de handles qui commencent par une majuscule."
-  puts "Il y a #{@majuscule} de handles qui contiennent une majuscule."
-  puts "Il y a #{@underscore} de handles qui contiennent un underscore."
+  puts "Il y a #{@premiere_majuscule} handles qui commencent par une majuscule."
+  puts "Il y a #{@majuscule} handles qui contiennent une majuscule."
+  puts "Il y a #{@underscore} handles qui contiennent un underscore."
 
 end
 
@@ -66,7 +66,7 @@ end
 
 #fonction qui recherche le nombre de handles contenant "aude"
 def recherche_aude(journaliste)
-  #si l'élément du tableau en minuscule = "aude"
+  #si l'élément du tableau en minuscule contient "aude"
   if journaliste.downcase =~ /aude/
     #alors aude + 1
     @aude += 1
@@ -74,50 +74,56 @@ def recherche_aude(journaliste)
 
 end
 
-#fonction qui vérifie si la premiere lettre d'un handle est majuscule
+#fonction qui vérifie si la premiere lettre d'un handle est en majuscule
 def recherche_premiere_majuscule(journaliste)
-#si la lettre après le @ est majuscule
+#si le caractère après le @ est en majuscule
   if journaliste =~ /@[A-Z]/
-    #alors premiere_majuscule + 1
+    #alors le compteur premiere_majuscule + 1
     @premiere_majuscule += 1
   end
 
 end
-
+#fonction qui vérifie si une majuscule est présente dans les handles
 def recherche_majuscules(journaliste)
-
+  #boucle qui transforme les caractère en ascii
   journaliste.each_byte do |c|
+    #si le caractère en cours est en majuscule
     if c.chr =~ /[A-Z]/
+      #alors compteur majuscule + 1
       @majuscule += 1
     end
   end
 
 end
-
+#fonction qui vérifie si un underscore est présent dans les handles
 def recherche_underscore(journaliste)
-
+  #boucle qui transforme les caractère en ascii
   journaliste.each_byte do |c|
+    #si le caractère en cours est un underscore
     if c.chr =~ /_/
+      #alors compteur underscore + 1
       @underscore += 1
     end
   end
 
 end
-
+#fonction qui trie les handles par ordre alphabétique
 def ordre_alphabetique(journalistes)
-
+  #Trie les handles par ordre alphabétique en ignorant la casse
   journalistes.sort_by! { |journaliste| journaliste.downcase }
+  #affichage du résultats
   puts "Voici la liste par ordre  alphabetque :"
   puts journalistes
 
 end
 
+#fonction principale appelant toutes les fonctions
 def perform(journalistes)
 
+  ordre_alphabetique(journalistes)
   parcourt_journaliste(journalistes)
   nombre_de_journaliste(journalistes)
-  ordre_alphabetique(journalistes)
 
 end
-
+#appel de la fonction principale
 perform(journalistes)
