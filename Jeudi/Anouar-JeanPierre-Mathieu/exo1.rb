@@ -87,16 +87,8 @@ def recherche_underscore(journaliste)
 end
 
 def ordre_alphabetique
-
-  @journalistes.each do |journaliste|
-    journaliste.tr!('@', '')
-  end
-
+  
   @journalistes.sort_by! { |journaliste| journaliste.downcase }
-
-  @journalistes.each do |journaliste|
-    journaliste.insert(0, '@')
-  end
   puts "Voici la liste par ordre  alphabetque :"
   puts @journalistes
 
